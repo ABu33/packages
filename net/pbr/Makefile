@@ -15,12 +15,10 @@ define Package/pbr/default
   SECTION:=net
   CATEGORY:=Network
   SUBMENU:=VPN
-  PROVIDES:=pbr
   TITLE:=Policy Based Routing Service
   URL:=https://docs.openwrt.melmac.net/pbr/
   DEPENDS:=+ip-full +jshn +jsonfilter +resolveip
   CONFLICTS:=vpnbypass vpn-policy-routing
-  PROVIDES:=vpnbypass vpn-policy-routing
   PKGARCH:=all
 endef
 
@@ -28,17 +26,24 @@ define Package/pbr
 $(call Package/pbr/default)
 	TITLE+= with nft/nft set support
 	DEPENDS+=+firewall4 +kmod-nft-core +kmod-nft-nat +nftables-json
+	VARIANT:=nftables
+	PROVIDES:=vpnbypass vpn-policy-routing
 endef
 
 define Package/pbr-iptables
 $(call Package/pbr/default)
 	TITLE+= with iptables/ipset support
 	DEPENDS+=+ipset +iptables +kmod-ipt-ipset +iptables-mod-ipopt
+	VARIANT:=iptables
+	PROVIDES:=pbr
+	DEFAULT_VARIANT:=1
 endef
 
 define Package/pbr-netifd
 $(call Package/pbr/default)
 	TITLE+= with netifd support
+	VARIANT:=netifd
+	PROVIDES:=pbr
 endef
 
 define Package/pbr/description
