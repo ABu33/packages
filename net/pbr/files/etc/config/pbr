@@ -2,10 +2,12 @@ config pbr 'config'
 	option enabled '0'
 	option verbosity '2'
 	option strict_enforcement '1'
-	option resolver_set 'none'
+	option resolver_set 'dnsmasq.nftset'
+	list resolver_instance '*'
 	option ipv6_enabled '0'
 	list ignored_interface 'vpnserver'
 	list ignored_interface 'wgserver'
+	option nft_file_support '0'
 	option boot_timeout '30'
 	option rule_create_option 'add'
 	option procd_reload_delay '1'
@@ -22,6 +24,10 @@ config include
 
 config include
 	option path '/usr/share/pbr/pbr.user.netflix'
+	option enabled 0
+
+config include
+	option path '/usr/share/pbr/pbr.user.wg_server_and_client'
 	option enabled 0
 
 config policy
